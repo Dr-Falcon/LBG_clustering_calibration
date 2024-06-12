@@ -1,0 +1,56 @@
+import numpy as np
+from astropy.io import fits
+import matplotlib.pyplot as plt
+#%matplotlib inline
+
+
+#----------------
+
+hdu_list = fits.open('./quaia_G20.5.fits', memmap=True)
+
+hdu_list.info()
+
+from astropy.table import Table
+evt_data = Table(hdu_list[1].data)
+
+print(hdu_list[1].columns)
+ra = evt_data['ra']
+print(ra.size)
+
+ra = evt_data['ra']
+dec = evt_data['dec']
+z = evt_data['redshift_quaia']
+
+f = open('./data/quaia_G20p5.dat','w')
+for i in range(ra.size):
+    f.write('%e %e %e\n'%(ra[i],dec[i],z[i]))
+f.close()
+
+fopen = np.loadtxt('./data/quaia_G20p5.dat')
+print(fopen)
+
+#----------------
+#----------------                                                              
+hdu_list = fits.open('./random_G20.5_10x.fits', memmap=True)
+
+hdu_list.info()
+
+from astropy.table import Table
+evt_data = Table(hdu_list[1].data)
+
+print(hdu_list[1].columns)
+ra = evt_data['ra']
+print(ra.size)
+
+ra = evt_data['ra']
+dec = evt_data['dec']
+
+f = open('./data/random_G20p5_10x.dat','w')
+for i in range(ra.size):
+    f.write('%e %e\n'%(ra[i],dec[i]))
+f.close()
+
+fopen = np.loadtxt('./data/random_G20p5_10x.dat')
+print(fopen)
+
+#----------------
